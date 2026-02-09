@@ -1,0 +1,825 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Compliance Screening Bot</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      background-color: #34495e;
+      padding: 0;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background-color: #2c3e50;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    select, input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    button.secondary {
+      background-color: #95a5a6;
+    }
+
+    button.secondary:hover {
+      background-color: #7f8c8d;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-found {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status-not-found {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .platform-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      background-color: #ecf0f1;
+      border-radius: 3px;
+      font-size: 12px;
+      margin-right: 5px;
+    }
+
+    .pagination {
+      display: flex;
+      gap: 5px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .pagination button {
+      padding: 8px 12px;
+      min-width: 40px;
+    }
+
+    .pagination button.active {
+      background-color: #2980b9;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Compliance Screening Bot</h1>
+    <p>Screening Results & Analysis</p>
+  </header>
+
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/results" class="active">Results</a>
+    <a href="/alerts">Alerts</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Results Summary</h2>
+      <div class="stats" id="statsContainer">
+        <div class="stat-card">
+          <h3 id="totalResults">0</h3>
+          <p>Total Results</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <h3 id="totalFound">0</h3>
+          <p>Found</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3 id="totalNotFound">0</h3>
+          <p>Not Found</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Filter Results</h2>
+      <div class="filters">
+        <select id="platformFilter">
+          <option value="">All Platforms</option>
+          <option value="opensanctions">OpenSanctions</option>
+          <option value="hhs">HHS Exclusions</option>
+          <option value="tennessee">Tennessee</option>
+        </select>
+
+        <select id="foundFilter">
+          <option value="">All Results</option>
+          <option value="true">Found</option>
+          <option value="false">Not Found</option>
+        </select>
+
+        <select id="monthFilter">
+          <option value="">All Months</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+
+        <button onclick="applyFilters()">Apply Filters</button>
+        <button class="secondary" onclick="downloadCSV()">Download CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Screening Results</h2>
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Platform</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody">
+          <tr>
+            <td colspan="4" class="no-results">Loading results...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let allResults = [];
+
+    async function loadResults() {
+      try {
+        const response = await fetch('/api/results');
+        allResults = await response.json();
+        displayResults(allResults);
+        updateStats();
+      } catch (error) {
+        console.error('Error loading results:', error);
+        document.getElementById('resultsBody').innerHTML =
+          '<tr><td colspan="4" class="no-results">Error loading results</td></tr>';
+      }
+    }
+
+    function displayResults(results) {
+      const tbody = document.getElementById('resultsBody');
+
+      if (results.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="no-results">No results found</td></tr>';
+        return;
+      }
+
+      let html = '';
+      results.forEach((result) => {
+        const statusBadge = result.found
+          ? '<span class="status-badge status-found">FOUND</span>'
+          : '<span class="status-badge status-not-found">NOT FOUND</span>';
+
+        const date = new Date(result.searchDate).toLocaleDateString();
+
+        html += `
+          <tr>
+            <td>${result.name}</td>
+            <td><span class="platform-badge">${result.platform}</span></td>
+            <td>${statusBadge}</td>
+            <td>${date}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    async function updateStats() {
+      try {
+        const response = await fetch('/api/results/summary');
+        const summary = await response.json();
+
+        document.getElementById('totalResults').textContent = summary.total;
+        document.getElementById('totalFound').textContent = summary.found;
+        document.getElementById('totalNotFound').textContent = summary.notFound;
+      } catch (error) {
+        console.error('Error updating stats:', error);
+      }
+    }
+
+    function applyFilters() {
+      const platform = document.getElementById('platformFilter').value;
+      const found = document.getElementById('foundFilter').value;
+      const month = document.getElementById('monthFilter').value;
+
+      let filtered = allResults;
+
+      if (platform) filtered = filtered.filter((r) => r.platform === platform);
+      if (found !== '') filtered = filtered.filter((r) => r.found === (found === 'true'));
+      if (month) filtered = filtered.filter((r) => r.month === parseInt(month));
+
+      displayResults(filtered);
+    }
+
+    function downloadCSV() {
+      window.location.href = '/api/results/download/csv';
+    }
+
+    // Load results on page load
+    loadResults();
+
+    // Refresh every 30 seconds
+    setInterval(loadResults, 30000);
+  </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Compliance Screening Bot</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      background-color: #34495e;
+      padding: 0;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background-color: #2c3e50;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    select, input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button, .btn {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    button:hover, .btn:hover {
+      background-color: #2980b9;
+    }
+
+    button.secondary {
+      background-color: #95a5a6;
+    }
+
+    button.secondary:hover {
+      background-color: #7f8c8d;
+    }
+
+    .btn.download {
+      background-color: #27ae60;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .btn.download:hover {
+      background-color: #229954;
+    }
+
+    .btn.view {
+      background-color: #e67e22;
+      padding: 6px 12px;
+      font-size: 12px;
+      margin-right: 5px;
+    }
+
+    .btn.view:hover {
+      background-color: #d35400;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-found {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .status-not-found {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .platform-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      background-color: #ecf0f1;
+      border-radius: 3px;
+      font-size: 12px;
+      margin-right: 5px;
+    }
+
+    .pagination {
+      display: flex;
+      gap: 5px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .pagination button {
+      padding: 8px 12px;
+      min-width: 40px;
+    }
+
+    .pagination button.active {
+      background-color: #2980b9;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #7f8c8d;
+    }
+
+    .pdf-links {
+      display: flex;
+      gap: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Compliance Screening Bot</h1>
+    <p>Screening Results & Analysis</p>
+  </header>
+
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/results" class="active">Results</a>
+    <a href="/alerts">Alerts</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Results Summary</h2>
+      <div class="stats" id="statsContainer">
+        <div class="stat-card">
+          <h3 id="totalResults">0</h3>
+          <p>Total Results</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <h3 id="totalFound">0</h3>
+          <p>Found</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3 id="totalNotFound">0</h3>
+          <p>Not Found</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Filter Results</h2>
+      <div class="filters">
+        <select id="platformFilter">
+          <option value="">All Platforms</option>
+          <option value="opensanctions">OpenSanctions</option>
+          <option value="hhs">HHS Exclusions</option>
+        </select>
+
+        <select id="foundFilter">
+          <option value="">All Results</option>
+          <option value="true">Found</option>
+          <option value="false">Not Found</option>
+        </select>
+
+        <select id="monthFilter">
+          <option value="">All Months</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+
+        <button onclick="applyFilters()">Apply Filters</button>
+        <button class="secondary" onclick="downloadCSV()">Download CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Screening Results</h2>
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Platform</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>PDF</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody">
+          <tr>
+            <td colspan="5" class="no-results">Loading results...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let allResults = [];
+
+    async function loadResults() {
+      try {
+        const response = await fetch('/api/upload');
+        const uploads = await response.json();
+
+        // Flatten all results from all uploads
+        allResults = [];
+        uploads.forEach(upload => {
+          if (upload.results && upload.results.length > 0) {
+            upload.results.forEach(result => {
+              allResults.push({
+                ...result,
+                uploadId: upload._id,
+                month: upload.month,
+                year: upload.year,
+                searchDate: result.checkedAt || upload.uploadDate
+              });
+            });
+          }
+        });
+
+        displayResults(allResults);
+        updateStats();
+      } catch (error) {
+        console.error('Error loading results:', error);
+        document.getElementById('resultsBody').innerHTML =
+          '<tr><td colspan="5" class="no-results">Error loading results</td></tr>';
+      }
+    }
+
+    function displayResults(results) {
+      const tbody = document.getElementById('resultsBody');
+
+      if (results.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="no-results">No results found</td></tr>';
+        return;
+      }
+
+      let html = '';
+      results.forEach((result) => {
+        const statusBadge = result.found
+          ? '<span class="status-badge status-found">FOUND</span>'
+          : '<span class="status-badge status-not-found">NOT FOUND</span>';
+
+        const date = new Date(result.searchDate).toLocaleDateString();
+
+        // PDF download links
+        let pdfLinks = '';
+        if (result.pdfUrl) {
+          pdfLinks = `
+            <div class="pdf-links">
+              <a href="${result.pdfUrl}" target="_blank" class="btn view" title="View PDF">View</a>
+              <a href="${result.pdfUrl}" download class="btn download" title="Download PDF">Download</a>
+            </div>
+          `;
+        } else {
+          pdfLinks = '<span style="color: #999; font-size: 12px;">No PDF</span>';
+        }
+
+        html += `
+          <tr>
+            <td><strong>${result.name}</strong></td>
+            <td><span class="platform-badge">${result.platform.toUpperCase()}</span></td>
+            <td>${statusBadge}</td>
+            <td>${date}</td>
+            <td>${pdfLinks}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    async function updateStats() {
+      const total = allResults.length;
+      const found = allResults.filter(r => r.found).length;
+      const notFound = total - found;
+
+      document.getElementById('totalResults').textContent = total;
+      document.getElementById('totalFound').textContent = found;
+      document.getElementById('totalNotFound').textContent = notFound;
+    }
+
+    function applyFilters() {
+      const platform = document.getElementById('platformFilter').value;
+      const found = document.getElementById('foundFilter').value;
+      const month = document.getElementById('monthFilter').value;
+
+      let filtered = allResults;
+
+      if (platform) filtered = filtered.filter((r) => r.platform === platform);
+      if (found !== '') filtered = filtered.filter((r) => r.found === (found === 'true'));
+      if (month) filtered = filtered.filter((r) => r.month === parseInt(month));
+
+      displayResults(filtered);
+      
+      // Update stats for filtered results
+      const total = filtered.length;
+      const foundCount = filtered.filter(r => r.found).length;
+      const notFound = total - foundCount;
+
+      document.getElementById('totalResults').textContent = total;
+      document.getElementById('totalFound').textContent = foundCount;
+      document.getElementById('totalNotFound').textContent = notFound;
+    }
+
+    function downloadCSV() {
+      if (allResults.length === 0) {
+        alert('No results to download');
+        return;
+      }
+
+      let csv = 'Name,Platform,Status,Date,PDF URL\n';
+
+      allResults.forEach((result) => {
+        const status = result.found ? 'FOUND' : 'NOT FOUND';
+        const date = new Date(result.searchDate).toLocaleDateString();
+        const pdfUrl = result.pdfUrl || 'N/A';
+
+        csv += `"${result.name}","${result.platform}","${status}","${date}","${pdfUrl}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `screening_results_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // Load results on page load
+    loadResults();
+
+    // Refresh every 30 seconds
+    setInterval(loadResults, 30000);
+  </script>
+</body>
+</html>

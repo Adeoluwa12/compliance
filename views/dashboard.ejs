@@ -1,0 +1,1138 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance Screening Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      background-color: #34495e;
+      padding: 0;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #2c3e50;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    input[type="file"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button, .btn {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    button:hover, .btn:hover {
+      background-color: #2980b9;
+    }
+
+    button.secondary {
+      background-color: #95a5a6;
+    }
+
+    button.secondary:hover {
+      background-color: #7f8c8d;
+    }
+
+    .btn.download {
+      background-color: #27ae60;
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .btn.download:hover {
+      background-color: #229954;
+    }
+
+    .btn.view {
+      background-color: #e67e22;
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .btn.view:hover {
+      background-color: #d35400;
+    }
+
+    .alert {
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .alert.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .status {
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status.pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .status.processing {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+
+    .status.completed {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status.failed {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background-color: #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #3498db;
+      transition: width 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .pdf-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .pdf-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 15px;
+      align-items: center;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 6px;
+      border-left: 4px solid #3498db;
+    }
+
+    .pdf-item.found {
+      border-left-color: #e74c3c;
+      background-color: #fff5f5;
+    }
+
+    .pdf-name {
+      font-size: 14px;
+    }
+
+    .pdf-name strong {
+      color: #2c3e50;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .pdf-status {
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .pdf-status.found {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .platform-badge {
+      padding: 4px 8px;
+      background-color: #ecf0f1;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #34495e;
+    }
+
+    .pdf-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .pdf-filter {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .pdf-filter select {
+      width: auto;
+      min-width: 150px;
+    }
+
+    .pdf-filter label {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .upload-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .upload-actions .btn {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+
+    .no-pdf {
+      color: #999;
+      font-size: 12px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Compliance Screening Bot</h1>
+    <p>Government Exclusion Database Monitor</p>
+  </header>
+
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/results">Results</a>
+    <a href="/alerts">Alerts</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Upload Excel File</h2>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="file">Select Excel File (.xlsx, .xls)</label>
+          <input type="file" id="file" name="file" accept=".xlsx,.xls" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label for="month">Month</label>
+            <select id="month" name="month" required>
+              <option value="">Select Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input type="number" id="year" name="year" min="2020" max="2099" required placeholder="2024">
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit">Upload & Start Screening</button>
+        </div>
+      </form>
+
+      <div id="uploadResult" style="display: none; margin-top: 15px;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Processing Monitor</h2>
+      <div id="progressContainer" style="display: none;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <span id="progressLabel"></span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="mainProgress" style="width: 0%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Recent Uploads</h2>
+      <div id="uploadsContainer">
+        <p>Loading uploads...</p>
+      </div>
+    </div>
+
+    <div class="card" id="pdfsCard" style="display: none;">
+      <h2>Download Search Results (PDFs)</h2>
+      
+      <div class="pdf-filter">
+        <label>Filter:</label>
+        <select id="pdfPlatformFilter" onchange="filterPDFs()">
+          <option value="">All Platforms</option>
+          <option value="opensanctions">OpenSanctions</option>
+          <option value="hhs">HHS Exclusions</option>
+        </select>
+        
+        <select id="pdfStatusFilter" onchange="filterPDFs()">
+          <option value="">All Results</option>
+          <option value="found">Found Only</option>
+          <option value="not-found">Not Found Only</option>
+        </select>
+      </div>
+
+      <div id="pdfCount" style="color: #666; font-size: 13px; margin-bottom: 10px;"></div>
+      
+      <div id="pdfListContainer">
+        <p style="text-align: center; padding: 20px; color: #999;">Loading PDFs...</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Quick Stats</h2>
+      <div class="stats">
+        <div class="stat-card">
+          <h3 id="totalUploads">0</h3>
+          <p>Total Uploads</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <h3 id="totalAlerts">0</h3>
+          <p>Names Found</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3 id="totalProcessed">0</h3>
+          <p>Total Processed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const uploadForm = document.getElementById('uploadForm');
+    const uploadResult = document.getElementById('uploadResult');
+    let progressInterval = null;
+    let currentUploadId = null;
+    let allPDFs = [];
+    let filteredPDFs = [];
+
+    uploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(uploadForm);
+
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          currentUploadId = data.uploadId;
+          showResult('success', `File uploaded successfully! Starting to screen ${data.totalNames} names...`);
+          uploadForm.reset();
+
+          document.getElementById('progressContainer').style.display = 'block';
+          document.getElementById('progressLabel').textContent = `Processing ${data.totalNames} names...`;
+
+          startProgressMonitoring(data.uploadId, data.totalNames);
+          loadUploads();
+        } else {
+          showResult('error', data.error || 'Upload failed');
+        }
+      } catch (error) {
+        showResult('error', `Error: ${error.message}`);
+      }
+    });
+
+    function showResult(type, message) {
+      uploadResult.innerHTML = `<div class="alert ${type}">${message}</div>`;
+      uploadResult.style.display = 'block';
+
+      if (type === 'success') {
+        setTimeout(() => {
+          uploadResult.style.display = 'none';
+        }, 5000);
+      }
+    }
+
+    function startProgressMonitoring(uploadId, totalNames) {
+      if (progressInterval) {
+        clearInterval(progressInterval);
+      }
+
+      progressInterval = setInterval(async () => {
+        try {
+          const response = await fetch(`/api/upload/${uploadId}`);
+          const upload = await response.json();
+
+          const percentage = totalNames > 0 ? Math.round((upload.processedNames / totalNames) * 100) : 0;
+
+          document.getElementById('mainProgress').style.width = percentage + '%';
+          document.getElementById('progressPercent').textContent = percentage + '%';
+          document.getElementById('progressLabel').textContent = `Processing: ${upload.processedNames}/${totalNames} names`;
+
+          if (upload.status === 'completed' || upload.status === 'failed') {
+            clearInterval(progressInterval);
+            if (upload.status === 'completed') {
+              showResult('success', 'Screening completed!');
+              loadUploads();
+              setTimeout(() => loadPDFs(uploadId), 1000);
+            } else {
+              showResult('error', `Screening failed: ${upload.errorMessage}`);
+            }
+          }
+        } catch (error) {
+          console.error('Error monitoring progress:', error);
+        }
+      }, 1000);
+    }
+
+    async function loadUploads() {
+      try {
+        const response = await fetch('/api/upload');
+        const uploads = await response.json();
+
+        if (uploads.length === 0) {
+          document.getElementById('uploadsContainer').innerHTML = '<p>No uploads yet</p>';
+          return;
+        }
+
+        let html = `
+          <table>
+            <thead>
+              <tr>
+                <th>File Name</th>
+                <th>Month/Year</th>
+                <th>Total Names</th>
+                <th>Processed</th>
+                <th>Status</th>
+                <th>Upload Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        uploads.forEach((upload) => {
+          const uploadDate = new Date(upload.uploadDate).toLocaleDateString();
+          const percentage = upload.totalNames > 0 ? Math.round((upload.processedNames / upload.totalNames) * 100) : 0;
+
+          html += `
+            <tr>
+              <td>${upload.filename}</td>
+              <td>${upload.month}/${upload.year}</td>
+              <td>${upload.totalNames}</td>
+              <td>
+                ${upload.processedNames}/${upload.totalNames}
+                <div class="progress-bar" style="width: 100%; margin: 5px 0;">
+                  <div class="progress-fill" style="width: ${percentage}%">${percentage}%</div>
+                </div>
+              </td>
+              <td><span class="status ${upload.status}">${upload.status}</span></td>
+              <td>${uploadDate}</td>
+              <td>
+                <div class="upload-actions">
+                  ${upload.status === 'completed' ? `<a href="#pdfs" onclick="loadPDFs('${upload._id}'); return false;" class="btn view">View PDFs</a>` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+
+        html += `
+            </tbody>
+          </table>
+        `;
+
+        document.getElementById('uploadsContainer').innerHTML = html;
+
+        const totalNames = uploads.reduce((sum, u) => sum + u.totalNames, 0);
+        document.getElementById('totalUploads').textContent = uploads.length;
+        document.getElementById('totalProcessed').textContent = totalNames;
+
+        loadAlertStats();
+      } catch (error) {
+        console.error('Error loading uploads:', error);
+      }
+    }
+
+    async function loadPDFs(uploadId) {
+      try {
+        console.log('[DEBUG] Loading PDFs for upload:', uploadId);
+        
+        const response = await fetch(`/api/upload/${uploadId}`);
+        const upload = await response.json();
+
+        console.log('[DEBUG] Upload data:', upload);
+        console.log('[DEBUG] Results count:', upload.results?.length || 0);
+
+        if (!upload.results || upload.results.length === 0) {
+          console.warn('[DEBUG] No results found');
+          alert('No results available for this upload yet.');
+          document.getElementById('pdfsCard').style.display = 'none';
+          return;
+        }
+
+        // Filter for results that have PDFs
+        allPDFs = upload.results.filter(r => r.pdfUrl && r.pdfUrl.trim() !== '');
+        
+        console.log('[DEBUG] Total results:', upload.results.length);
+        console.log('[DEBUG] Results with PDFs:', allPDFs.length);
+        
+        if (allPDFs.length > 0) {
+          console.log('[DEBUG] Sample PDF URL:', allPDFs[0].pdfUrl);
+        }
+        
+        if (allPDFs.length === 0) {
+          alert('PDFs are still being generated. Please wait and try again in a moment.');
+          document.getElementById('pdfsCard').style.display = 'none';
+          return;
+        }
+
+        document.getElementById('pdfsCard').style.display = 'block';
+        filteredPDFs = [...allPDFs];
+        displayPDFs();
+
+        // Scroll to PDFs section
+        document.getElementById('pdfsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (error) {
+        console.error('[ERROR] Loading PDFs:', error);
+        alert('Error loading PDFs. Please check the console for details.');
+      }
+    }
+
+    function filterPDFs() {
+      const platformFilter = document.getElementById('pdfPlatformFilter').value;
+      const statusFilter = document.getElementById('pdfStatusFilter').value;
+
+      filteredPDFs = allPDFs.filter(pdf => {
+        const platformMatch = !platformFilter || pdf.platform === platformFilter;
+        const statusMatch = !statusFilter || 
+          (statusFilter === 'found' && pdf.found) || 
+          (statusFilter === 'not-found' && !pdf.found);
+        
+        return platformMatch && statusMatch;
+      });
+
+      displayPDFs();
+    }
+
+    function displayPDFs() {
+      const container = document.getElementById('pdfListContainer');
+      const countEl = document.getElementById('pdfCount');
+
+      if (filteredPDFs.length === 0) {
+        container.innerHTML = '<p style="text-align: center; padding: 20px; color: #999;">No PDFs match the current filters.</p>';
+        countEl.textContent = '';
+        return;
+      }
+
+      countEl.textContent = `Showing ${filteredPDFs.length} of ${allPDFs.length} PDFs`;
+
+      let html = '<div class="pdf-list">';
+
+      filteredPDFs.forEach((result) => {
+        const foundClass = result.found ? 'found' : '';
+        const statusText = result.found ? 'FOUND' : 'NOT FOUND';
+        const pdfUrl = result.pdfUrl || '';
+
+        console.log('[DEBUG] Displaying PDF:', result.name, 'Platform:', result.platform, 'URL:', pdfUrl);
+
+        html += `
+          <div class="pdf-item ${foundClass}">
+            <div class="pdf-name">
+              <strong>${result.name}</strong>
+              <span class="platform-badge">${result.platform.toUpperCase()}</span>
+            </div>
+            <span class="pdf-status ${foundClass}">${statusText}</span>
+            <div class="pdf-actions">
+              ${pdfUrl ? `
+                <a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" class="btn view">
+                  View
+                </a>
+                <a href="${pdfUrl}" download class="btn download">
+                  Download
+                </a>
+              ` : `<span class="no-pdf">PDF pending...</span>`}
+            </div>
+          </div>
+        `;
+      });
+
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    async function loadAlertStats() {
+      try {
+        const response = await fetch('/api/upload/alerts/summary');
+        const summary = await response.json();
+        document.getElementById('totalAlerts').textContent = summary.totalAlerts || 0;
+      } catch (error) {
+        console.error('Error loading alerts:', error);
+      }
+    }
+
+    // Load data on page load
+    loadUploads();
+
+    // Refresh uploads every 5 seconds
+    setInterval(loadUploads, 5000);
+  </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance Screening Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background-color: #f5f5f5; color: #333; }
+    header { background-color: #2c3e50; color: white; padding: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    nav { background-color: #34495e; padding: 0; display: flex; gap: 0; }
+    nav a { color: white; padding: 12px 20px; text-decoration: none; transition: background-color 0.3s; }
+    nav a:hover { background-color: #2c3e50; }
+    .container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+    .card { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px; }
+    .card h2 { margin-bottom: 20px; color: #2c3e50; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: 500; }
+    input[type="file"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+    .button-group { display: flex; gap: 10px; margin-top: 20px; }
+    button, .btn { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; transition: background-color 0.3s; text-decoration: none; display: inline-block; text-align: center; }
+    button:hover, .btn:hover { background-color: #2980b9; }
+    button.secondary { background-color: #95a5a6; }
+    button.secondary:hover { background-color: #7f8c8d; }
+    .btn.download { background-color: #27ae60; padding: 8px 16px; font-size: 12px; }
+    .btn.download:hover { background-color: #229954; }
+    .btn.view { background-color: #e67e22; padding: 8px 16px; font-size: 12px; }
+    .btn.view:hover { background-color: #d35400; }
+    .btn.bulk { background-color: #9b59b6; padding: 10px 20px; }
+    .btn.bulk:hover { background-color: #8e44ad; }
+    .alert { padding: 12px; border-radius: 4px; margin-bottom: 15px; }
+    .alert.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .alert.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+    th { background-color: #f5f5f5; font-weight: 600; }
+    tr:hover { background-color: #f9f9f9; }
+    .status { padding: 4px 8px; border-radius: 3px; font-size: 12px; font-weight: 500; }
+    .status.completed { background-color: #d4edda; color: #155724; }
+    .progress-bar { width: 100%; height: 20px; background-color: #ddd; border-radius: 4px; overflow: hidden; margin: 10px 0; }
+    .progress-fill { height: 100%; background-color: #3498db; transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; }
+    .stat-card h3 { font-size: 24px; margin-bottom: 5px; }
+    .stat-card p { font-size: 12px; opacity: 0.9; }
+    .pdf-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #ecf0f1; }
+    .pdf-filter { display: flex; gap: 10px; align-items: center; }
+    .pdf-filter select { width: auto; min-width: 150px; }
+    .pdf-folder { margin-bottom: 30px; }
+    .folder-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 20px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center; }
+    .folder-header h3 { margin: 0; font-size: 16px; }
+    .folder-count { background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 12px; font-size: 12px; }
+    .folder-content { border: 1px solid #ddd; border-top: none; border-radius: 0 0 6px 6px; }
+    .pdf-item { display: grid; grid-template-columns: 1fr auto auto; gap: 15px; align-items: center; padding: 15px 20px; border-bottom: 1px solid #ecf0f1; transition: background-color 0.2s; }
+    .pdf-item:last-child { border-bottom: none; }
+    .pdf-item:hover { background-color: #f8f9fa; }
+    .pdf-item.found { background-color: #fff5f5; }
+    .pdf-item.found:hover { background-color: #ffe5e5; }
+    .pdf-name strong { color: #2c3e50; display: block; margin-bottom: 4px; font-size: 14px; }
+    .pdf-status { padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; background-color: #d4edda; color: #155724; }
+    .pdf-status.found { background-color: #f8d7da; color: #721c24; }
+    .pdf-actions { display: flex; gap: 8px; }
+    .bulk-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .loading { text-align: center; padding: 40px; color: #7f8c8d; }
+    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Compliance Screening Bot</h1>
+    <p>Government Exclusion Database Monitor</p>
+  </header>
+
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/results">Results</a>
+    <a href="/alerts">Alerts</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Upload Excel File</h2>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="file">Select Excel File (.xlsx, .xls)</label>
+          <input type="file" id="file" name="file" accept=".xlsx,.xls" required>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label for="month">Month</label>
+            <select id="month" name="month" required>
+              <option value="">Select Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input type="number" id="year" name="year" min="2020" max="2099" required placeholder="2025">
+          </div>
+        </div>
+        <div class="button-group">
+          <button type="submit">Upload & Start Screening</button>
+        </div>
+      </form>
+      <div id="uploadResult" style="display: none; margin-top: 15px;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Processing Monitor</h2>
+      <div id="progressContainer" style="display: none;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <span id="progressLabel"></span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="mainProgress" style="width: 0%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Recent Uploads</h2>
+      <div id="uploadsContainer">
+        <p>Loading uploads...</p>
+      </div>
+    </div>
+
+    <div class="card" id="pdfsCard" style="display: none;">
+      <div class="pdf-header">
+        <h2 style="margin: 0;">Download Search Results</h2>
+        <div class="bulk-actions">
+          <button onclick="downloadManifest()" class="btn bulk">Download Manifest (CSV)</button>
+          <button onclick="downloadAllZip()" class="btn bulk">Download All (ZIP)</button>
+        </div>
+      </div>
+      <div class="pdf-filter">
+        <label>Filter:</label>
+        <select id="pdfPlatformFilter" onchange="filterPDFs()">
+          <option value="">All Platforms</option>
+          <option value="opensanctions">OpenSanctions</option>
+          <option value="hhs">HHS Exclusions</option>
+        </select>
+        <select id="pdfStatusFilter" onchange="filterPDFs()">
+          <option value="">All Results</option>
+          <option value="found">Found Only</option>
+          <option value="not-found">Not Found Only</option>
+        </select>
+      </div>
+      <div id="pdfListContainer">
+        <div class="loading"><div class="spinner"></div><p>Loading PDFs...</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Quick Stats</h2>
+      <div class="stats">
+        <div class="stat-card">
+          <h3 id="totalUploads">0</h3>
+          <p>Total Uploads</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <h3 id="totalAlerts">0</h3>
+          <p>Names Found</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3 id="totalProcessed">0</h3>
+          <p>Total Processed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentUploadId = null;
+    let allPDFs = [];
+    let filteredPDFs = [];
+    let pdfUrls = new Map();
+    let progressInterval = null;
+
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      try {
+        const response = await fetch('/api/upload', { method: 'POST', body: formData });
+        const data = await response.json();
+
+        if (response.ok) {
+          currentUploadId = data.uploadId;
+          showResult('success', `File uploaded! Screening ${data.totalNames} names...`);
+          e.target.reset();
+          document.getElementById('progressContainer').style.display = 'block';
+          document.getElementById('progressLabel').textContent = `Processing ${data.totalNames} names...`;
+          startProgressMonitoring(data.uploadId, data.totalNames);
+          loadUploads();
+        } else {
+          showResult('error', data.error || 'Upload failed');
+        }
+      } catch (error) {
+        showResult('error', `Error: ${error.message}`);
+      }
+    });
+
+    function showResult(type, message) {
+      const el = document.getElementById('uploadResult');
+      el.innerHTML = `<div class="alert ${type}">${message}</div>`;
+      el.style.display = 'block';
+      if (type === 'success') setTimeout(() => el.style.display = 'none', 5000);
+    }
+
+    function startProgressMonitoring(uploadId, totalNames) {
+      if (progressInterval) clearInterval(progressInterval);
+      progressInterval = setInterval(async () => {
+        try {
+          const response = await fetch(`/api/upload/${uploadId}`);
+          const upload = await response.json();
+          const pct = totalNames > 0 ? Math.round((upload.processedNames / totalNames) * 100) : 0;
+          document.getElementById('mainProgress').style.width = pct + '%';
+          document.getElementById('progressPercent').textContent = pct + '%';
+          document.getElementById('progressLabel').textContent = `Processing: ${upload.processedNames}/${totalNames} names`;
+          if (upload.status === 'completed' || upload.status === 'failed') {
+            clearInterval(progressInterval);
+            if (upload.status === 'completed') {
+              showResult('success', 'Screening completed!');
+              loadUploads();
+              loadPDFs(uploadId);
+            } else {
+              showResult('error', `Screening failed: ${upload.errorMessage}`);
+            }
+          }
+        } catch (error) {
+          console.error('Error monitoring progress:', error);
+        }
+      }, 1000);
+    }
+
+    async function loadUploads() {
+      try {
+        const response = await fetch('/api/upload/list');
+        const uploads = await response.json();
+        if (uploads.length === 0) {
+          document.getElementById('uploadsContainer').innerHTML = '<p>No uploads yet</p>';
+          return;
+        }
+        let html = `<table><thead><tr><th>File Name</th><th>Month/Year</th><th>Total Names</th><th>Processed</th><th>Status</th><th>Upload Date</th><th>Actions</th></tr></thead><tbody>`;
+        uploads.forEach(u => {
+          const dt = new Date(u.uploadDate).toLocaleDateString();
+          const pct = u.totalNames > 0 ? Math.round((u.processedNames / u.totalNames) * 100) : 0;
+          html += `<tr>
+            <td>${u.filename}</td>
+            <td>${u.month}/${u.year}</td>
+            <td>${u.totalNames}</td>
+            <td>${u.processedNames}/${u.totalNames}<div class="progress-bar" style="width: 100%; margin: 5px 0;"><div class="progress-fill" style="width: ${pct}%">${pct}%</div></div></td>
+            <td><span class="status ${u.status}">${u.status}</span></td>
+            <td>${dt}</td>
+            <td>${u.status === 'completed' ? `<a href="#pdfs" onclick="loadPDFs('${u._id}'); return false;" class="btn view">View PDFs</a>` : ''}</td>
+          </tr>`;
+        });
+        html += `</tbody></table>`;
+        document.getElementById('uploadsContainer').innerHTML = html;
+        document.getElementById('totalUploads').textContent = uploads.length;
+        document.getElementById('totalProcessed').textContent = uploads.reduce((sum, u) => sum + u.totalNames, 0);
+        loadAlertStats();
+      } catch (error) {
+        console.error('Error loading uploads:', error);
+      }
+    }
+
+    async function loadPDFs(uploadId) {
+      try {
+        currentUploadId = uploadId;
+        document.getElementById('pdfsCard').style.display = 'block';
+        document.getElementById('pdfListContainer').innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading PDFs...</p></div>';
+        const response = await fetch(`/api/upload/${uploadId}/pdfs/urls`);
+        const data = await response.json();
+        allPDFs = data.urls;
+        pdfUrls.clear();
+        allPDFs.forEach(pdf => pdfUrls.set(pdf.index, pdf.signedUrl));
+        filteredPDFs = [...allPDFs];
+        displayPDFs();
+        document.getElementById('pdfsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (error) {
+        console.error('Error loading PDFs:', error);
+        alert('Error loading PDFs. Please try again.');
+      }
+    }
+
+    function filterPDFs() {
+      const pf = document.getElementById('pdfPlatformFilter').value;
+      const sf = document.getElementById('pdfStatusFilter').value;
+      filteredPDFs = allPDFs.filter(pdf => {
+        const pm = !pf || pdf.platform === pf;
+        const sm = !sf || (sf === 'found' && pdf.found) || (sf === 'not-found' && !pdf.found);
+        return pm && sm;
+      });
+      displayPDFs();
+    }
+
+    function displayPDFs() {
+      const c = document.getElementById('pdfListContainer');
+      if (filteredPDFs.length === 0) {
+        c.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">No PDFs match the filters.</p>';
+        return;
+      }
+      const org = { opensanctions: { found: [], notFound: [] }, hhs: { found: [], notFound: [] } };
+      filteredPDFs.forEach(pdf => {
+        const p = pdf.platform.toLowerCase();
+        const s = pdf.found ? 'found' : 'notFound';
+        if (org[p]) org[p][s].push(pdf);
+      });
+      let html = '';
+      if (org.opensanctions.found.length > 0) html += createFolder('OpenSanctions - FOUND', org.opensanctions.found, true);
+      if (org.opensanctions.notFound.length > 0) html += createFolder('OpenSanctions - NOT FOUND', org.opensanctions.notFound, false);
+      if (org.hhs.found.length > 0) html += createFolder('HHS Exclusions - FOUND', org.hhs.found, true);
+      if (org.hhs.notFound.length > 0) html += createFolder('HHS Exclusions - NOT FOUND', org.hhs.notFound, false);
+      c.innerHTML = html;
+    }
+
+    function createFolder(title, pdfs, isFound) {
+      const fc = isFound ? 'found' : '';
+      let html = `<div class="pdf-folder"><div class="folder-header"><h3>${title}</h3><span class="folder-count">${pdfs.length} PDFs</span></div><div class="folder-content">`;
+      pdfs.forEach(pdf => {
+        const st = pdf.found ? 'FOUND' : 'NOT FOUND';
+        const url = pdfUrls.get(pdf.index);
+        html += `<div class="pdf-item ${fc}"><div class="pdf-name"><strong>${pdf.name}</strong></div><span class="pdf-status ${fc}">${st}</span><div class="pdf-actions"><a href="${url}" target="_blank" rel="noopener noreferrer" class="btn view">View</a><a href="${url}" download="${pdf.name.replace(/\s+/g, '_')}_${pdf.platform}.pdf" class="btn download">Download</a></div></div>`;
+      });
+      html += `</div></div>`;
+      return html;
+    }
+
+    function downloadManifest() {
+      if (!filteredPDFs || filteredPDFs.length === 0) {
+        alert('No PDFs to export');
+        return;
+      }
+      let csv = 'Name,Platform,Status,Download URL\n';
+      filteredPDFs.forEach(pdf => {
+        const st = pdf.found ? 'FOUND' : 'NOT FOUND';
+        const url = pdfUrls.get(pdf.index);
+        csv += `"${pdf.name}","${pdf.platform}","${st}","${url}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pdf_manifest_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    async function downloadAllZip() {
+      if (!currentUploadId) {
+        alert('No upload selected');
+        return;
+      }
+      const pf = document.getElementById('pdfPlatformFilter').value;
+      const sf = document.getElementById('pdfStatusFilter').value;
+      let url = `/api/upload/${currentUploadId}/pdfs/download-zip?`;
+      if (pf) url += `platform=${pf}&`;
+      if (sf) url += `status=${sf}&`;
+      window.open(url, '_blank');
+    }
+
+    async function loadAlertStats() {
+      try {
+        const response = await fetch('/api/upload/list');
+        const uploads = await response.json();
+        let totalFound = 0;
+        uploads.forEach(u => {
+          if (u.results) {
+            totalFound += u.results.filter(r => r.found).length;
+          }
+        });
+        document.getElementById('totalAlerts').textContent = totalFound;
+      } catch (error) {
+        console.error('Error loading alerts:', error);
+      }
+    }
+
+    loadUploads();
+    setInterval(loadUploads, 5000);
+  </script>
+</body>
+</html>

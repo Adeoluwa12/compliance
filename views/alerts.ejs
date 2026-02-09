@@ -1,0 +1,1041 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alerts - Compliance Screening</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      background-color: #34495e;
+      padding: 0;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #2c3e50;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .alert-row {
+      border-left: 4px solid #f5576c;
+    }
+
+    .platform-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      margin-right: 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+      background-color: #ffe5e5;
+      color: #c41e3a;
+    }
+
+    .email-status {
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .email-status.sent {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .email-status.pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .no-data {
+      padding: 20px;
+      text-align: center;
+      color: #999;
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      background-color: #27ae60;
+      width: auto;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .action-btn:hover {
+      background-color: #229954;
+    }
+
+    .export-btn {
+      background-color: #9b59b6;
+      width: auto;
+      display: inline-block;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+    }
+
+    .export-btn:hover {
+      background-color: #8e44ad;
+    }
+
+    .result-count {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      width: auto;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Compliance Screening Bot</h1>
+    <p>Government Exclusion Database Monitor</p>
+  </header>
+
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/results">Results</a>
+    <a href="/alerts">Alerts</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Alert Statistics</h2>
+      <div class="stats" id="statsContainer">
+        <div class="stat-card">
+          <h3 id="totalAlerts">0</h3>
+          <p>Total Alerts</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <h3 id="emailsSent">0</h3>
+          <p>Emails Sent</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3 id="uniqueNames">0</h3>
+          <p>Unique Names</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Alerts</h2>
+
+      <div class="filters">
+        <div class="form-group">
+          <label for="filterMonth">Filter by Month</label>
+          <select id="filterMonth">
+            <option value="">All Months</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filterYear">Filter by Year</label>
+          <input type="number" id="filterYear" min="2020" max="2099" placeholder="All Years">
+        </div>
+
+        <div style="display: flex; align-items: flex-end; gap: 15px;">
+          <button onclick="loadAlerts()" style="width: auto; padding: 10px 20px;">Apply Filters</button>
+          <button onclick="exportAlerts()" class="export-btn">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="result-count" id="resultCount"></div>
+
+      <div id="alertsContainer">
+        <div class="no-data">Loading alerts...</div>
+      </div>
+
+      <div class="pagination">
+        <button id="prevBtn" onclick="previousPage()" style="width: auto; padding: 8px 12px;">Previous</button>
+        <span id="pageInfo" style="align-self: center; color: #666;"></span>
+        <button id="nextBtn" onclick="nextPage()" style="width: auto; padding: 8px 12px;">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allAlerts = [];
+    let currentPage = 1;
+    const alertsPerPage = 25;
+
+    async function loadAlerts() {
+      try {
+        const month = document.getElementById('filterMonth').value;
+        const year = document.getElementById('filterYear').value;
+
+        let url = '/api/results/alerts';
+        const params = new URLSearchParams();
+
+        if (month) params.append('month', month);
+        if (year) params.append('year', year);
+
+        if (params.toString()) {
+          url += '?' + params.toString();
+        }
+
+        const response = await fetch(url);
+        allAlerts = await response.json();
+
+        currentPage = 1;
+        displayPage();
+        loadStats();
+      } catch (error) {
+        console.error('Error loading alerts:', error);
+        document.getElementById('alertsContainer').innerHTML =
+          '<div class="no-data">Error loading alerts</div>';
+      }
+    }
+
+    function displayPage() {
+      const start = (currentPage - 1) * alertsPerPage;
+      const end = start + alertsPerPage;
+      const pageAlerts = allAlerts.slice(start, end);
+
+      document.getElementById('resultCount').textContent = `Showing ${allAlerts.length} alert(s)`;
+
+      if (pageAlerts.length === 0) {
+        document.getElementById('alertsContainer').innerHTML =
+          '<div class="no-data">No alerts found</div>';
+        updatePaginationButtons();
+        return;
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Platforms Found</th>
+              <th>Date</th>
+              <th>Email Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      pageAlerts.forEach((alert) => {
+        const date = new Date(alert.alertDate).toLocaleDateString();
+        const platformBadges = alert.platforms
+          .map((p) => `<span class="platform-badge">${p}</span>`)
+          .join('');
+        const emailStatus = alert.emailSent
+          ? '<span class="email-status sent">Sent</span>'
+          : '<span class="email-status pending">Pending</span>';
+
+        html += `
+          <tr class="alert-row">
+            <td><strong>${alert.name}</strong></td>
+            <td>${platformBadges}</td>
+            <td>${date}</td>
+            <td>${emailStatus}</td>
+            <td>
+              ${!alert.emailSent ? `<button class="action-btn" onclick="markAsSent('${alert._id}')">Mark Sent</button>` : ''}
+            </td>
+          </tr>
+        `;
+      });
+
+      html += `
+          </tbody>
+        </table>
+      `;
+
+      document.getElementById('alertsContainer').innerHTML = html;
+      updatePaginationButtons();
+    }
+
+    async function loadStats() {
+      try {
+        const month = document.getElementById('filterMonth').value;
+        const year = document.getElementById('filterYear').value;
+
+        let url = '/api/results/alerts/summary';
+        const params = new URLSearchParams();
+
+        if (month) params.append('month', month);
+        if (year) params.append('year', year);
+
+        if (params.toString()) {
+          url += '?' + params.toString();
+        }
+
+        const response = await fetch(url);
+        const summary = await response.json();
+
+        document.getElementById('totalAlerts').textContent = summary.totalAlerts;
+        document.getElementById('emailsSent').textContent = summary.emailsSent;
+        document.getElementById('uniqueNames').textContent = allAlerts.length;
+      } catch (error) {
+        console.error('Error loading stats:', error);
+      }
+    }
+
+    function updatePaginationButtons() {
+      const totalPages = Math.ceil(allAlerts.length / alertsPerPage);
+      document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages || 1}`;
+      document.getElementById('prevBtn').disabled = currentPage === 1;
+      document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+    }
+
+    function previousPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        displayPage();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function nextPage() {
+      const totalPages = Math.ceil(allAlerts.length / alertsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayPage();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    async function markAsSent(alertId) {
+      try {
+        const response = await fetch(`/api/results/alerts/${alertId}/sent`, {
+          method: 'PUT',
+        });
+
+        if (response.ok) {
+          loadAlerts();
+        } else {
+          alert('Error marking alert as sent');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    function exportAlerts() {
+      if (allAlerts.length === 0) {
+        alert('No alerts to export');
+        return;
+      }
+
+      let csv = 'Name,Platforms,Date,Email Sent\n';
+
+      allAlerts.forEach((alert) => {
+        const date = new Date(alert.alertDate).toLocaleDateString();
+        const platforms = alert.platforms.join('; ');
+        const emailSent = alert.emailSent ? 'Yes' : 'No';
+
+        csv += `"${alert.name}","${platforms}","${date}","${emailSent}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `alerts_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // Load alerts on page load
+    loadAlerts();
+
+    // Refresh alerts every 10 seconds
+    setInterval(loadAlerts, 10000);
+  </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alerts - Compliance Screening</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      background-color: #34495e;
+      padding: 0;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #2c3e50;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button, .btn {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      width: 100%;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    button:hover, .btn:hover {
+      background-color: #2980b9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .alert-row {
+      border-left: 4px solid #f5576c;
+    }
+
+    .platform-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      margin-right: 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+      background-color: #ffe5e5;
+      color: #c41e3a;
+    }
+
+    .email-status {
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .email-status.sent {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .email-status.pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .no-data {
+      padding: 20px;
+      text-align: center;
+      color: #999;
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      background-color: #27ae60;
+      width: auto;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .action-btn:hover {
+      background-color: #229954;
+    }
+
+    .btn.view {
+      background-color: #e67e22;
+      padding: 6px 12px;
+      font-size: 12px;
+      width: auto;
+      margin-right: 5px;
+    }
+
+    .btn.view:hover {
+      background-color: #d35400;
+    }
+
+    .export-btn {
+      background-color: #9b59b6;
+      width: auto;
+      display: inline-block;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+    }
+
+    .export-btn:hover {
+      background-color: #8e44ad;
+    }
+
+    .result-count {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      width: auto;
+      padding: 8px 12px;
+    }
+
+    .pdf-links {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Compliance Screening Bot</h1>
+    <p>Government Exclusion Database Monitor</p>
+  </header>
+
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/results">Results</a>
+    <a href="/alerts">Alerts</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Alert Statistics</h2>
+      <div class="stats" id="statsContainer">
+        <div class="stat-card">
+          <h3 id="totalAlerts">0</h3>
+          <p>Total Alerts</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <h3 id="uniqueNames">0</h3>
+          <p>Unique Names Found</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3 id="totalPDFs">0</h3>
+          <p>PDFs Available</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Alerts</h2>
+
+      <div class="filters">
+        <div class="form-group">
+          <label for="filterMonth">Filter by Month</label>
+          <select id="filterMonth">
+            <option value="">All Months</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filterYear">Filter by Year</label>
+          <input type="number" id="filterYear" min="2020" max="2099" placeholder="All Years">
+        </div>
+
+        <div style="display: flex; align-items: flex-end; gap: 15px;">
+          <button onclick="loadAlerts()" style="width: auto; padding: 10px 20px;">Apply Filters</button>
+          <button onclick="exportAlerts()" class="export-btn">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="result-count" id="resultCount"></div>
+
+      <div id="alertsContainer">
+        <div class="no-data">Loading alerts...</div>
+      </div>
+
+      <div class="pagination">
+        <button id="prevBtn" onclick="previousPage()" style="width: auto; padding: 8px 12px;">Previous</button>
+        <span id="pageInfo" style="align-self: center; color: #666;"></span>
+        <button id="nextBtn" onclick="nextPage()" style="width: auto; padding: 8px 12px;">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allAlerts = [];
+    let currentPage = 1;
+    const alertsPerPage = 25;
+
+    async function loadAlerts() {
+      try {
+        const month = document.getElementById('filterMonth').value;
+        const year = document.getElementById('filterYear').value;
+
+        // Load all uploads and filter for alerts (names that were found)
+        const response = await fetch('/api/upload');
+        const uploads = await response.json();
+
+        allAlerts = [];
+
+        uploads.forEach(upload => {
+          if (upload.results && upload.results.length > 0) {
+            // Group results by name for this upload
+            const foundByName = {};
+            
+            upload.results.forEach(result => {
+              if (result.found) {
+                if (!foundByName[result.name]) {
+                  foundByName[result.name] = {
+                    name: result.name,
+                    platforms: [],
+                    pdfs: [],
+                    month: upload.month,
+                    year: upload.year,
+                    alertDate: result.checkedAt || upload.uploadDate
+                  };
+                }
+                foundByName[result.name].platforms.push(result.platform);
+                if (result.pdfUrl) {
+                  foundByName[result.name].pdfs.push({
+                    platform: result.platform,
+                    url: result.pdfUrl
+                  });
+                }
+              }
+            });
+
+            // Add to all alerts
+            Object.values(foundByName).forEach(alert => {
+              // Apply filters
+              const monthMatch = !month || alert.month === parseInt(month);
+              const yearMatch = !year || alert.year === parseInt(year);
+              
+              if (monthMatch && yearMatch) {
+                allAlerts.push(alert);
+              }
+            });
+          }
+        });
+
+        currentPage = 1;
+        displayPage();
+        loadStats();
+      } catch (error) {
+        console.error('Error loading alerts:', error);
+        document.getElementById('alertsContainer').innerHTML =
+          '<div class="no-data">Error loading alerts</div>';
+      }
+    }
+
+    function displayPage() {
+      const start = (currentPage - 1) * alertsPerPage;
+      const end = start + alertsPerPage;
+      const pageAlerts = allAlerts.slice(start, end);
+
+      document.getElementById('resultCount').textContent = `Showing ${allAlerts.length} alert(s)`;
+
+      if (pageAlerts.length === 0) {
+        document.getElementById('alertsContainer').innerHTML =
+          '<div class="no-data">No alerts found</div>';
+        updatePaginationButtons();
+        return;
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Platforms Found</th>
+              <th>Date</th>
+              <th>PDFs</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      pageAlerts.forEach((alert) => {
+        const date = new Date(alert.alertDate).toLocaleDateString();
+        const platformBadges = alert.platforms
+          .map((p) => `<span class="platform-badge">${p.toUpperCase()}</span>`)
+          .join('');
+
+        let pdfLinks = '';
+        if (alert.pdfs && alert.pdfs.length > 0) {
+          pdfLinks = '<div class="pdf-links">';
+          alert.pdfs.forEach(pdf => {
+            pdfLinks += `
+              <a href="${pdf.url}" target="_blank" class="btn view" title="View ${pdf.platform} PDF">
+                ${pdf.platform.toUpperCase()}
+              </a>
+            `;
+          });
+          pdfLinks += '</div>';
+        } else {
+          pdfLinks = '<span style="color: #999; font-size: 12px;">No PDFs</span>';
+        }
+
+        html += `
+          <tr class="alert-row">
+            <td><strong>${alert.name}</strong></td>
+            <td>${platformBadges}</td>
+            <td>${date}</td>
+            <td>${pdfLinks}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+          </tbody>
+        </table>
+      `;
+
+      document.getElementById('alertsContainer').innerHTML = html;
+      updatePaginationButtons();
+    }
+
+    async function loadStats() {
+      const uniqueNames = new Set(allAlerts.map(a => a.name)).size;
+      const totalPDFs = allAlerts.reduce((sum, alert) => sum + (alert.pdfs ? alert.pdfs.length : 0), 0);
+
+      document.getElementById('totalAlerts').textContent = allAlerts.length;
+      document.getElementById('uniqueNames').textContent = uniqueNames;
+      document.getElementById('totalPDFs').textContent = totalPDFs;
+    }
+
+    function updatePaginationButtons() {
+      const totalPages = Math.ceil(allAlerts.length / alertsPerPage);
+      document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages || 1}`;
+      document.getElementById('prevBtn').disabled = currentPage === 1;
+      document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+    }
+
+    function previousPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        displayPage();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function nextPage() {
+      const totalPages = Math.ceil(allAlerts.length / alertsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayPage();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function exportAlerts() {
+      if (allAlerts.length === 0) {
+        alert('No alerts to export');
+        return;
+      }
+
+      let csv = 'Name,Platforms,Date,PDF Count,PDF URLs\n';
+
+      allAlerts.forEach((alert) => {
+        const date = new Date(alert.alertDate).toLocaleDateString();
+        const platforms = alert.platforms.join('; ');
+        const pdfCount = alert.pdfs ? alert.pdfs.length : 0;
+        const pdfUrls = alert.pdfs ? alert.pdfs.map(p => p.url).join('; ') : 'N/A';
+
+        csv += `"${alert.name}","${platforms}","${date}","${pdfCount}","${pdfUrls}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `alerts_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // Load alerts on page load
+    loadAlerts();
+
+    // Refresh alerts every 10 seconds
+    setInterval(loadAlerts, 10000);
+  </script>
+</body>
+</html>
