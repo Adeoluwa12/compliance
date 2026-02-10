@@ -10,8 +10,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "postinstall": "npm run build" 
-  },
+    "postinstall": "npm run build && npx puppeteer browsers install chrome"
+    },
   "engines": {
     "node": ">=18.0.0" 
   },
