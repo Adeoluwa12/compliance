@@ -82,8 +82,11 @@ export async function startScraping(
 
         try {
 
+          // const pageText = await page1.evaluate(() => {
+          //   return document.body.innerText;
+          // });
           const pageText = await page1.evaluate(() => {
-            return document.body.innerText;
+            return document.body?.innerText || '';
           });
           
           // Check for "no results" message
@@ -200,8 +203,12 @@ export async function startScraping(
 
         try {
 
+          // const pageText = await page2.evaluate(() => {
+          //   return document.body.innerText;
+          // });
+
           const pageText = await page2.evaluate(() => {
-            return document.body.innerText;
+            return document.body?.innerText || '';
           });
           
           // Check for "no results" message
