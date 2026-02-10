@@ -9,7 +9,7 @@ export const getPuppeteerConfig = () => {
       '--no-first-run',
       '--no-zygote',
       '--single-process',
-      '--disable-accelerated-2d-canvas',
+      '--disable-accelerated-2d-canvas'
     ],
     timeout: 60000,
   };
