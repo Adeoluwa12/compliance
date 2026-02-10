@@ -4,7 +4,7 @@ import path from 'path';
 import Upload from '../models/Upload';
 import { uploadPdfToS3 } from '../services/s3Service';
 import { sendAlertEmail } from '../services/emailService';
-import document from 'next/document';
+// import document from 'next/document';
 import { getPuppeteerConfig } from '../config/puppeteer';
 
 export async function startScraping(
@@ -83,11 +83,7 @@ export async function startScraping(
         try {
 
           const pageText = await page1.evaluate(() => {
-
-            // Ensure 'document' is typed as 'any' to access 'body'
-
-            return (document as any).body.innerText;
-
+            return document.body.innerText;
           });
           
           // Check for "no results" message
@@ -205,13 +201,9 @@ export async function startScraping(
         try {
 
           const pageText = await page2.evaluate(() => {
-
-            // Ensure 'document' is typed as 'any' to access 'body'
-
-            return (document as any).body.innerText;
-
+            return document.body.innerText;
           });
-
+          
           // Check for "no results" message
           found = !pageText.includes('No Results were found') &&
                   pageText.includes('Exclusions Search Results');
