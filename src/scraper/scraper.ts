@@ -468,7 +468,7 @@ async function searchOpenSanctions(
     ]);
     console.log(`[OpenSanctions] Search submitted`);
 
-    await page.waitForTimeout(1500);
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     let found = false;
     try {
@@ -611,7 +611,7 @@ async function searchHHS(
       throw navError;
     }
 
-    await page.waitForTimeout(1500);
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     let found = false;
     try {
