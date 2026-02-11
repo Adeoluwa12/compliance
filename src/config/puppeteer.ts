@@ -42,7 +42,7 @@ export const getPuppeteerConfig = () => {
 
   // CRITICAL: Point to Chromium in production (Render)
   if (isProduction) {
-    config.executablePath = '/usr/bin/chromium-browser';
+    config.executablePath = '/usr/bin/chromium';
     console.log('[Puppeteer] Production: Using Chromium at', config.executablePath);
   } else {
     console.log('[Puppeteer] Development: Using bundled Chrome');
