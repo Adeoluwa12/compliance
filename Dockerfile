@@ -1,9 +1,8 @@
 FROM node:18-slim
 
-# Install Chromium
+# Install Chromium and dependencies
 RUN apt-get update && apt-get install -y \
     chromium \
-    chromium-sandbox \
     fonts-liberation \
     libappindicator3-1 \
     libasound2 \
@@ -25,15 +24,26 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+# Copy package files
 COPY package*.json ./
-RUN npm ci --only=production
+
+# CHANGE: Use install instead of ci if package-lock.json is missing
+# Added --include=dev because you need 'typescript' to run 'npm run build'
+RUN npm install
+
 COPY . .
+
+# Build the project
 RUN npm run build
+
+# Create uploads directory
 RUN mkdir -p /tmp/uploads
 
 EXPOSE 3000
 ENV NODE_ENV=production
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+# Standard path for chromium in debian-slim
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 CMD ["npm", "start"]
