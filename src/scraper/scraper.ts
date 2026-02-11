@@ -480,6 +480,16 @@ async function searchOpenSanctions(
   try {
     page = await browser.newPage();
     
+    // Block only images to reduce memory usage
+    await page.setRequestInterception(true);
+    page.on('request', (req: any) => {
+      if (req.resourceType() === 'image') {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
+    
     await page.goto('https://www.opensanctions.org/datasets/us_tn_med_exclusions/', {
       waitUntil: 'domcontentloaded',
       timeout: 30000,
@@ -593,6 +603,16 @@ async function searchHHS(
 
   try {
     page = await browser.newPage();
+    
+    // Block only images to reduce memory usage
+    await page.setRequestInterception(true);
+    page.on('request', (req: any) => {
+      if (req.resourceType() === 'image') {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
     
     // Use shorter timeout and domcontentloaded for faster loading
     await page.goto('https://exclusions.oig.hhs.gov/', {
