@@ -531,8 +531,17 @@ async function searchOpenSanctions(
       const sanitizedName = name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
       const pdfPath = path.join(tmpDir, `os_${sanitizedName}_${Date.now()}.pdf`);
 
-      // Wait for all resources to load before PDF generation
-      await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 }).catch(() => {});
+      // Wait for CSS to fully load by checking computed styles
+      await page.waitForFunction(
+        () => {
+          const styles = window.getComputedStyle(document.body);
+          return styles.backgroundColor !== 'rgba(0, 0, 0, 0)' && styles.color !== '';
+        },
+        { timeout: 15000 }
+      ).catch(() => {});
+
+      // Additional wait for network idle
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       await page.pdf({
         path: pdfPath,
@@ -677,8 +686,17 @@ async function searchHHS(
       const sanitizedName = name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
       const pdfPath = path.join(tmpDir, `hhs_${sanitizedName}_${Date.now()}.pdf`);
 
-      // Wait for all resources to load before PDF generation
-      await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 }).catch(() => {});
+      // Wait for CSS to fully load by checking computed styles
+      await page.waitForFunction(
+        () => {
+          const styles = window.getComputedStyle(document.body);
+          return styles.backgroundColor !== 'rgba(0, 0, 0, 0)' && styles.color !== '';
+        },
+        { timeout: 15000 }
+      ).catch(() => {});
+
+      // Additional wait for network idle
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       await page.pdf({
         path: pdfPath,
